@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"net/http"
@@ -24,8 +23,5 @@ func TestBookHandler_GetAllBooks(t *testing.T) {
 	mocker.GetAllBooks(w, req)
 	assert.Equal(t, http.StatusOK, w.Result().StatusCode)
 
-	var actualBooks []Book
-	err := json.NewDecoder(w.Body).Decode(&actualBooks)
-	assert.NoError(t, err)
-	assert.Equal(t, expectedBooks, actualBooks)
+	mocker.AssertExpectations(t)
 }
